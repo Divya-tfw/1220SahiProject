@@ -1,0 +1,476 @@
+ _include("12TwentyData.sah");
+ _include("12TwentyOR.sah");
+    var $DatafileName;
+    var $data;
+    var $sSite ;
+  	var $sGradYear
+	var $sGradTerm;
+	var $sOfferTiming ;
+	var $sJobPhase;
+    var $sWorkAuth;
+	var $sEmpType;
+    var $sRumorJob;
+	var $sIncludeRoport;
+    var $sDegreelevel;
+	var $sCollege;
+    var $sDepartment;
+	var $sUndergradMajor;
+    var $TestFail=0;
+    var  $sRunStatus;
+    var  $sSiteType;
+
+function login12Twenty($Url, $Username, $Password){
+	_navigateTo($Url);
+	_setValue(_emailbox($txt_UserName), $Username);
+	_setValue(_password($txt_Password), $Password);
+	_click(_link($btn_Login));
+}
+
+/*function readFilterDataFromExcel(){
+	$data = _readExcelFile("C:\\sahi_pro\\userdata\\scripts\\12Twenty\\excels\\Aba_Reports.xlsx","Emp_Location");
+	
+//	_log("Name of first user is: " + $data[0]["sSurveyPeriod"]);
+//	_log("Current data is " + $data);
+	//$rs = db.select(“select * from [Emp_Location$]”);
+	var $Gradyear = $data[0]["iGraduationYr"];
+	var $Gradterm = $data[0]["sGraduationTerm"];
+	var $Serveyperiod = $data[0]["sSurveyPeriod"];
+	 $DatafileName = $data[0]["DataFileName"];
+	//var $Gradterm = $data[1][“sGradua”];
+	//var $Serveyperiod = $data[1][“sSurveyPeriod”];
+
+_setSelected(_select("GraduationYearId"), $Gradyear);
+_setSelected(_select("GraduationTermId"),$Gradterm);
+_setSelected(_select("SurveyPeriodId"), "At Graduation");
+_click(_div("search-filters"));
+_click(_submit("Generate Report"));
+}*/
+
+function readFilterDataClassStatus($k)
+{
+  $data = _readExcelFile("C:\\sahiprov610\\userdata\\scripts\\12twenty\\excels\\Data_QA_TestCases.xlsx","Class Status");
+  //_log(_count($data.length));
+  $sRunStatus = $data[$k]["Run status"];
+  $sSiteType = $data[$k]["Site Instance Type"];
+  $sSite = $data[$k]["Site Instance"];
+  $sGradYear = $data[$k]["Grad Class"];
+  $sGradTerm = $data[$k]["Grad Term"];
+  $sOfferTiming = $data[$k]["Offer Timing"];
+  $sJobPhase = $data[$k]["Job Phase"];
+  $sWorkAuth = $data[$k]["Work Authorization"];
+  $sEmpType = $data[$k]["Desired Industry /Employment Type"];
+  $sRumorJob = $data[$k]["Include Rumor Jobs"];
+  $sIncludeRoport = $data[$k]["Included in Reporting"];
+  $sDegreelevel = $data[$k]["Degree Level"];
+  $sCollege = $data[$k]["College / School"];
+  $sDepartment = $data[$k]["Department"];
+  $sUndergradMajor= $data[$k]["Undergrad Major"];
+  $DatafileName = $data[$k]["DataFileName"];
+  
+}
+
+function readFilterDataStandardReports($k)
+{
+  $data = _readExcelFile("C:\\sahi_pro\\userdata\\scripts\\12Twenty\\excels\\Data_QA_TestCases.xlsx","Nace_Reports");
+  //_log(_count($data.length));
+  $sRunStatus = $data[$k]["Run status"];
+ // $sSiteType = $data[$k]["Site Instance Type"];
+  $sSite = $data[$k]["Site Instance"];
+  $sGradYear = $data[$k]["Grad Class"];
+  $sGradTerm = $data[$k]["Grad Term"];
+  $sOfferTiming = $data[$k]["Offer Timing"];
+  $sJobPhase = $data[$k]["Job Phase"];
+  $sJointDegree = $data[$k]["Joint Degree"];
+ $sReportingMajor = $data[$k]["Desired Industry /Employment Type"];
+ $sCutoffDate = $data[$k]["Include Rumor Jobs"];
+ // $sIncludeRoport = $data[$k]["Included in Reporting"];
+  $sDegreelevel = $data[$k]["Degree Level"];
+  $sCollege = $data[$k]["College / School"];
+  $sDepartment = $data[$k]["Department"];
+ // $sUndergradMajor= $data[$k]["Undergrad Major"];
+  $DatafileName = $data[$k]["DataFileName"];
+  
+}
+
+function Baseline()
+{
+  
+for(var $loop=49;$loop<70;$loop++) 
+ {
+  readFilterDataClassStatus($loop); 
+  if($sRunStatus=="Y") 
+  {
+   if($sSiteType=="FTMBA") 
+   {    
+    if($sSite=="Harvard_FTMBA")
+   {   
+   login12Twenty($sHarvard_FTMBA,$sUsername,$sPassword);
+   }
+   else
+   {
+    login12Twenty($sTexas_FTMBA,$sUsername,$sPassword);
+     _log("Login to texas mba"+$loop);
+   } 
+  navigationToClassStatusReport(); 
+  selectFilterValuesFTMBA();
+  } 
+  else if($sSiteType=="BSBA")  
+  {
+  login12Twenty($sOhio_State_BSBA,$sUsername,$sPassword);
+  navigationToClassStatusReport();   
+  selectFilterValuesBSBA();
+  }
+   else if($sSiteType=="Law")
+   {
+  login12Twenty($sUCLA_Law,$sUsername,$sPassword);
+  navigationToClassStatusReport();   
+  selectFilterValuesUCLA_Law();
+   } 
+    else if($sSiteType=="Centralized")
+   {
+      if($sSite=="UNC_Centralized")
+   {   
+    login12Twenty($sUNC_Centralized,$sUsername,$sPassword);
+   }
+      else
+    {
+    login12Twenty($sColumbia_Centralized,$sUsername,$sPassword);
+    }
+   navigationToClassStatusReport();  
+   selectFilterValuesCentralized();
+   }
+   else
+    {
+      _log("Excel data finish");
+    }
+ WriteToCSV(); 
+ logout12Twenty();
+  }    
+ }
+}
+
+function FTMBA_Actual()
+{
+ for(var $loop=0;$loop<2;$loop++) 
+ {
+ if($sSite=="Harvard_FTMBA")
+   {   
+ login12Twenty($sHarvard_FTMBA,$sUsername,$sPassword);
+   }
+   else
+   {
+    login12Twenty($sTexas_FTMBA,$sUsername,$sPassword);
+   }
+ navigationToClassStatusReport(); 
+ readFilterDataClassStatus($loop);  
+ selectFilterValuesFTMBA();
+ readFromCSVAndVerify() ; 
+ logout12Twenty();
+  }             
+}
+
+
+/*function BSBA_Baseline()
+{
+ for(var $loop=0;$loop<28;$loop++) 
+ {  
+   readFilterDataClassStatus($loop);
+   if($sRunStatus=="Y") 
+  {
+   if($sSiteType=="BSBA")
+   {    
+  login12Twenty($sOhio_State_BSBA,$sUsername,$sPassword);
+ navigationToClassStatusReport();   
+ selectFilterValuesBSBA();
+ WriteToCSV(); 
+ logout12Twenty();
+  }  
+  }
+ }
+}*/
+
+function BSBA_Actual()
+{
+ for(var $loop=17;$loop<28;$loop++) 
+ {
+ login12Twenty($sOhio_State_BSBA,$sUsername,$sPassword);
+ navigationToClassStatusReport(); 
+ readFilterDataClassStatus($loop);  
+ selectFilterValuesBSBA();
+ readFromCSVAndVerify() ; 
+ logout12Twenty();
+  }             
+}
+
+/*function UCLA_LAW_Baseline()
+{
+ for(var $loop=28;$loop<37;$loop++) 
+ {   
+ login12Twenty($sUCLA_Law,$sUsername,$sPassword);
+ navigationToClassStatusReport(); 
+ readFilterDataClassStatus($loop);  
+ selectFilterValuesUCLA_Law();
+ WriteToCSV(); 
+ logout12Twenty();
+  }             
+}*/
+
+function UCLA_LAW_Actual()
+{
+ for(var $loop=28;$loop<37;$loop++) 
+ {
+ login12Twenty($sUCLA_Law,$sUsername,$sPassword);
+ navigationToClassStatusReport(); 
+ readFilterDataClassStatus($loop);  
+ selectFilterValuesUCLA_Law();
+ readFromCSVAndVerify() ; 
+ logout12Twenty();
+  }             
+}
+
+/*function Centralized_Baseline()
+{
+ for(var $loop=37;$loop<61;$loop++) 
+ {   
+    if($sSite!="UNC_Centralized")
+   {   
+ login12Twenty($sColumbia_Centralized,$sUsername,$sPassword);
+   }
+   else
+   {
+    login12Twenty($sSite_UNC_Centralized,$sUsername,$sPassword);
+   }
+ navigationToClassStatusReport(); 
+ readFilterDataClassStatus($loop);  
+ selectFilterValuesCentralized();
+ WriteToCSV(); 
+ logout12Twenty();
+  }             
+}*/
+
+function Centralized_Actual()
+{
+ for(var $loop=37;$loop<61;$loop++) 
+ {
+     if($sSite!="Columbia_Centralized")
+   {   
+   login12Twenty($sColumbia_Centralized,$sUsername,$sPassword);
+   }
+   else
+   {
+    login12Twenty($sSite_UNC_Centralized,$sUsername,$sPassword);
+   }
+ navigationToClassStatusReport(); 
+ readFilterDataClassStatus($loop);  
+ selectFilterValuesCentralized();
+ readFromCSVAndVerify() ; 
+ logout12Twenty();
+  }             
+}
+  
+function selectFilterValuesBSBA()
+{
+ _click(_button($default_gradYear));
+_check(_checkbox($sGradYear));
+_uncheck(_checkbox($default_gradYear));
+_setSelected(_select($gradTerm), $sGradTerm);
+//_setSelected(_select("AssignedAdvisorId"), "All");
+_setSelected(_select($degreeId), $sDegreelevel);
+_setSelected(_select("JobPhaseId"), $sJobPhase);
+_setSelected(_select("ConsolidatedWorkAuthorizationId"),$sWorkAuth);
+_setSelected(_select("ConsolidatedIndustryId"), $sEmpType);
+_setSelected(_select("RumorJobOption"), $sRumorJob);
+_setSelected(_select("OutcomeInclusionId"), $sIncludeRoport);
+_setSelected(_select("OfferTimingId"),$sOfferTiming);
+_setSelected(_select("UndergradMajorId"),$sUndergradMajor);
+_click(_button("Get Results"));
+}
+
+function selectFilterValuesFTMBA()
+{
+ _click(_button("2016"));
+_check(_checkbox($sGradYear));
+_uncheck(_checkbox("2016"));
+_setSelected(_select("GraduationTermId"), $sGradTerm);
+//_setSelected(_select("AssignedAdvisorId"), "All");
+//_setSelected(_select("DegreeLevelId"), $sDegreelevel);
+_setSelected(_select("JobPhaseId"), $sJobPhase);
+_setSelected(_select("ConsolidatedWorkAuthorizationId"),$sWorkAuth);
+_setSelected(_select("ConsolidatedIndustryId"), $sEmpType);
+_setSelected(_select("RumorJobOption"), $sRumorJob);
+_setSelected(_select("OutcomeInclusionId"), $sIncludeRoport);
+_setSelected(_select("OfferTimingId"),$sOfferTiming);
+//_setSelected(_select("UndergradMajorId"),$sUndergradMajor);
+_click(_button("Get Results"));
+}
+
+function selectFilterValuesUCLA_Law()
+{
+ _click(_button("2016"));
+_check(_checkbox($sGradYear));
+_uncheck(_checkbox("2016"));
+_setSelected(_select("GraduationTermId"), $sGradTerm);
+//_setSelected(_select("AssignedAdvisorId"), "All");
+//_setSelected(_select("DegreeLevelId"), $sDegreelevel);  
+_setSelected(_select("JobPhaseId"), $sJobPhase);
+_setSelected(_select("ConsolidatedWorkAuthorizationId"),$sWorkAuth);
+_setSelected(_select("ConsolidatedEmploymentTypeId"), $sEmpType);
+_setSelected(_select("RumorJobOption"), $sRumorJob);
+_setSelected(_select("OutcomeInclusionId"), $sIncludeRoport);
+_setSelected(_select("OfferTimingId"),$sOfferTiming);
+//_setSelected(_select("UndergradMajorId"),$sUndergradMajor);
+_click(_button("Get Results"));
+}
+
+function selectFilterValuesCentralized()
+{
+ _click(_button("2016"));
+_check(_checkbox($sGradYear));
+_uncheck(_checkbox("2016"));
+_setSelected(_select("GraduationTermId"), $sGradTerm);
+_setSelected(_select("DegreeLevelId"), $sDegreelevel);
+  if($sJobPhase!="NA")
+  {   
+_setSelected(_select("JobPhaseId"), $sJobPhase);
+  } 
+_setSelected(_select("ConsolidatedWorkAuthorizationId"),$sWorkAuth);
+_setSelected(_select("ConsolidatedIndustryId"), $sEmpType);
+_setSelected(_select("RumorJobOption"), $sRumorJob);
+_setSelected(_select("OutcomeInclusionId"), $sIncludeRoport);
+_setSelected(_select("OfferTimingId"),$sOfferTiming);
+_setSelected(_select("UndergradMajorId"),$sUndergradMajor);
+_setSelected(_select("CollegeId"), $sCollege);
+  _log("Site instance:"+$sSite);
+ if($sSite=="Columbia_Centralized")
+{
+_setSelected(_select("DepartmentId"),$sDepartment);
+}
+_click(_button("Get Results"));
+}
+
+function WriteToCSV(){
+	//read data from app
+	var $rowCount=_fetch(_table("report-data").rows.length);
+	
+	for(var $i=0;$i<$rowCount;$i++)
+	{
+      
+	var $Tabledata = _getTableContents(_table("report-data"),[0,1,2,3,4,5,6,7,8,9],$i,$i+1);
+	
+	_log("Table data is " + $Tabledata+"  i is "+$i);
+      
+      if(_exists("D:\\Allworkspace\\12twenyReport\\Baseline\\Build_No"))
+      {
+      _writeCSVFile($Tabledata,"D:\\Allworkspace\\12TwentyReport\\Baseline\\Build_No\\"+$DatafileName+".csv");
+      }
+      else
+      {
+	    var $file = new java.io.File("D:\\Allworkspace\\12TwentyReport\\Baseline/Build_No").mkdir();
+        _writeCSVFile($Tabledata,"D:\\Allworkspace\\12TwentyReport\\Baseline\\Build_No\\"+$DatafileName+".csv");
+      }
+	}
+  
+  /*	var $Tabledata = _getTableContents(_table("report-data"));
+	for(var $i=0;$i<$Tabledata.length;$i++)
+	{
+      for(var $j=0; $j<$Tabledata[$i].length;$j++)
+      {
+        var $Tabledata1 = _getTableContents(_table("report-data"),[$j],$i,$i+1)
+     	_log("Table data is " + $Tabledata1+"  i is"+$i);
+	
+      }
+      _writeCSVFile($Tabledata1,"D:\\Allworkspace\\"+$DatafileName+".csv");
+	}*/
+  
+ /*  var $Tabledata = _getTableContents(_table("report-data"));
+	for(var $i=0;$i<$Tabledata.length;$i++)
+	{
+      for(var $j=0; $j<$Tabledata[$i].length;$j++)
+      {
+     	_log("Table data is " + $Tabledata[$i][$j]+"  i is"+$i+"J is "+$j);
+	   _writeCSVFile($Tabledata[$i][$j],"D:\\Allworkspace\\"+$DatafileName+".csv");
+      }*/
+    }
+  
+
+
+function readFromCSVAndVerify(){
+	var $actual = _getTableContents(_table("report-data"));
+	var $expected =_readCSVFile("D:\\Allworkspace\\12TwentyReport\\Baseline\\Build_No\\"+$DatafileName+".csv", "," );
+	for (var $i=0; $i<$actual.length && $i<$expected.length; $i++){
+			for (var $j=0; $j<$actual[$i].length && $j<$expected[$i].length; $j++)
+	        {
+				if($actual[$i][$j]==$expected[$i][$j])
+	            {
+	              _log("Expected: " + $expected[$i][$j]+"Actual "+$actual[$i][$j]);
+			     }
+	          else
+	            {
+   
+                  if(_fileExists("D:\\Allworkspace\\12TwentyReport\\Actual\\Build_No\\"+$DatafileName+".csv"))
+                  {
+                     updateOnError($i,$j,$actual[$i][$j], $expected[$i][$j]);
+                  }
+                  else
+                  {
+                      var $file = new java.io.File("D:\\Allworkspace\\12TwentyReport\\Actual/Build_No").mkdir();
+                      _copyFile("D:\\Allworkspace\\12TwentyReport\\Baseline\\Build_No\\"+$DatafileName+".csv", "D:\\Allworkspace\\12TwentyReport\\Actual\\Build_No\\"+$DatafileName+".csv");
+                    //  $TestFail=$TestFail+1;
+                   // _writeCSVFile($TestFail,"D:\\Allworkspace\\12twenyActual\\FailedTestCase.csv",true);
+                    updateOnError($i,$j,$actual[$i][$j], $expected[$i][$j]);
+                   _assertEqual($actual[$i][$j],$expected[$i][$j]);
+                  }
+	              _log("Verificaton failed :=Expected data in failed test case " + $expected[$i][$j]+"Actual "+$actual[$i][$j]);
+	           }
+             // _assertEqual($actual[$i][$j],$expected[$i][$j]);
+	              _log("Expected: " + $expected[$i][$j]+"Actual "+$actual[$i][$j]);  
+	    }
+	}
+}
+
+function updateOnError($x,$y,$actualData,$expectedData)
+{
+ var $a=_readCSVFile("D:\\Allworkspace\\12TwentyReport\\Actual\\Build_No\\"+$DatafileName+".csv");
+  $a[$x][$y] = $actualData+"***"+$expectedData;
+  _writeCSVFile($a,"D:\\Allworkspace\\12TwentyReport\\Actual\\Build_No\\"+$DatafileName+".csv",true);
+  
+}
+
+function onScriptFailure($e)
+{
+  //_logExceptionAsFailure($e);
+   _log("Script failing for Report:"+$DatafileName+".csv");
+  return true; // Forces Sahi to continue execution and not stop at error. Since Sahi Pro V4.3
+}
+
+
+function logout12Twenty(){
+	_click(_span("glyphicon glyphicon-user"));
+	_click(_link("Log Out"));
+}
+
+function navigationToABAReport()
+{
+	_click(_link("Reports"));
+	_click(_link("Standard Reports"));
+	_click(_link("ABA Reports"));
+	//_click(_link("Generate[19]"));
+}
+
+function navigationToClassStatusReport()
+{
+	_click(_link("Reports"));
+	_click(_link("12Twenty Reports"));
+	_click(_link("Student Outcomes"));
+}
+
+function navigationToStandard()
+{
+	_click(_link("Reports"));
+	_click(_link("Standard Reports"));
+	//_click(_link("Student Outcomes"));
+}
+
+
+
+

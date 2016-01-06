@@ -1,0 +1,64 @@
+//Login page
+$txt_UserName="Username";
+$txt_Password="Password";
+$btn_Login="Log in";
+$default_gradYear ="2016";
+
+//navigation to reports
+$link_Report="Reports";
+$tab_Standard_Report="Standard Reports";
+$tab_12twenty_Reports="12Twenty Reports";
+$link_student_Outcomes="Student Outcomes";
+$tab_mba_report ="MBA Standard Reports";
+$tab_bwr_report ="Businessweek";
+$tab_nace_report ="NACE";
+$tab_Nalp_Report = "NALP Reports";
+$tab_Aba_Report="ABA Reports";
+
+//Generate
+$link_generate = "Generate";
+
+//select filter data
+$gradYearId="GraduationYearId";
+$gradTerm="GraduationTermId";
+$degreeId="DegreeLevelId";
+
+//Table ID
+$table_id="report-data" | "report-dataTable2" |"report_list";
+$table_id3="online";
+//Table ID for BWR Reports(Q.83-Q87)
+$table_id2="base_salary";
+//List ID for BWR List Data
+$list_data ="bwr_salary_list";
+
+//Filter Data
+$job_PhaseId="JobPhaseId";
+$workAuthId="ConsolidatedWorkAuthorizationId";
+$empType="ConsolidatedIndustryId";
+$rumorJob="RumorJobOption";
+$includeReport="OutcomeInclusionId";
+$offerTimingId="OfferTimingId";
+$underGradMajor="UndergradMajorId";
+$getResult="Get Results";
+$collegeId="CollegeId";
+$department="DepartmentId";
+$empType_Law="ConsolidatedEmploymentTypeId";
+$generateReport="Generate Report";
+$btn_all="All";
+$programId="ProgramId";
+$departmentAll="multiselect dropdown-toggle btn btn-default[1]";
+$txt_departSearch="African-American Studies";
+$drpdwn_offertiming = "SurveyPeriodId";
+$txtbox_cutoffdate = "LawCutoffDate";
+$drpdwn_jointDegree ="HasJointDegree";
+$get_primaryMajor_false ="GetPrimaryMajorsOnlyFalse";
+
+//Log Out
+$logout_icon ="glyphicon glyphicon-user";
+$btn_Logout="Log Out";
+
+
+
+
+
+
