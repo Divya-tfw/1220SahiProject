@@ -52,7 +52,8 @@
 			singlesession="${singlesession}"
 			threads="${threads}">
 			<!-- Custom fields - add, edit or remove as required -->
-			<customfield key="username" value="divya"/>
+			
+			
 		</sahi>
 		<antcall target="failsahichrome"/>
 	</target>

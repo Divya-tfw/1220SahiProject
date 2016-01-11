@@ -1,5 +1,7 @@
 //File which has data values
 //Site Access
+
+var $suiteInfo= _suiteInfo();
 $sUrlTexas_Law="http://law-texas.admin.data-12twenty.com";
 $sOhio_State_BSBA="http://bsba-fisher-osu.admin.data-12twenty.com";
 $sTexas_FTMBA="http://mba-mccombs-texas.admin.data-12twenty.com";
@@ -11,7 +13,9 @@ $sFordham_Centralized="http://fordham.admin.data-12twenty.com";
 $sTexas_PTMBA="http://wp-mccombs-texas.admin.data-12twenty.com";
 //Login Credentials
 $sUsername="dataqa@12twenty.com";
+//$sUsername=$suiteInfo["UserName"];
 $sPassword="wfcs923$23Wag";
+//$sPassword=$suiteInfo["Password"];
 $sRun_Status="Run status";
 //Suite Data
 $sData_MBA="MBA Standard Reports";
@@ -63,6 +67,13 @@ $sBaseline_dir="D:\\Allworkspace\\12TwentyReport\\Baseline/Build_No";
 $path_actual="D:\\Allworkspace\\12TwentyReport\\Actual\\Build_No\\";
 //Actual directory
 $sAcual_dir="D:\\Allworkspace\\12TwentyReport\\Actual/Build_No";
+
+
+_log("username:"+ $suiteInfo["UserName"]);
+_log("username:"+ $suiteInfo["Password"]);
+_log("username:"+ $suiteInfo["BuildType"]);
+_log("username:"+ $suiteInfo["Baseline_BN"]);
+_log("username:"+ $suiteInfo["Actual_BN"]);
 //Temporary files path
 $path_temp="D:\\Allworkspace\\Temporary\\Temp_";
 //Temporary directory

@@ -1,2 +1,3 @@
 var $suiteInfo= _suiteInfo();
 _log("username:"+ $suiteInfo["username"]);
+_log($suiteInfo);
