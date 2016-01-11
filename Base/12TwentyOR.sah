@@ -1,8 +1,10 @@
+// File which has all identifier values
+
 //Login page
 $txt_UserName="Username";
 $txt_Password="Password";
 $btn_Login="Log in";
-$default_gradYear ="2016";
+
 
 //navigation to reports
 $link_Report="Reports";
@@ -18,35 +20,34 @@ $tab_Aba_Report="ABA Reports";
 //Generate
 $link_generate = "Generate";
 
-//select filter data
-$gradYearId="GraduationYearId";
-$gradTerm="GraduationTermId";
-$degreeId="DegreeLevelId";
-
 //Table ID
 $table_id="report-data" | "report-dataTable2" |"report_list";
-$table_id3="online";
+//$table_id3="online";
 //Table ID for BWR Reports(Q.83-Q87)
 $table_id2="base_salary";
 //List ID for BWR List Data
 $list_data ="bwr_salary_list";
 
-//Filter Data
-$job_PhaseId="JobPhaseId";
-$workAuthId="ConsolidatedWorkAuthorizationId";
-$empType="ConsolidatedIndustryId";
-$rumorJob="RumorJobOption";
-$includeReport="OutcomeInclusionId";
-$offerTimingId="OfferTimingId";
-$underGradMajor="UndergradMajorId";
+//Select Filter Data
+$default_gradYear ="2016";
+$drp_dwn_gradYearId="GraduationYearId";
+$drp_dwn_gradTerm="GraduationTermId";
+$drp_dwn_degreeId="DegreeLevelId";
+$drp_dwn_job_PhaseId="JobPhaseId";
+$drp_dwn_workAuthId="ConsolidatedWorkAuthorizationId";
+$drp_dwn_empType="ConsolidatedIndustryId";
+$drp_dwn_rumorJob="RumorJobOption";
+$drp_dwn_includeReport="OutcomeInclusionId";
+$drp_dwn_offerTimingId="OfferTimingId";
+$drp_dwn_underGradMajor="UndergradMajorId";
 $getResult="Get Results";
-$collegeId="CollegeId";
-$department="DepartmentId";
+$drp_dwn_collegeId="CollegeId";
+$drp_dwn_department="DepartmentId";
 $empType_Law="ConsolidatedEmploymentTypeId";
 $generateReport="Generate Report";
 $btn_all="All";
-$programId="ProgramId";
-$departmentAll="multiselect dropdown-toggle btn btn-default[1]";
+$drp_dwn_programId="ProgramId";
+$btn_departmentAll="multiselect dropdown-toggle btn btn-default[1]";
 $txt_departSearch="African-American Studies";
 $drpdwn_offertiming = "SurveyPeriodId";
 $txtbox_cutoffdate = "LawCutoffDate";
